@@ -26,7 +26,8 @@ parser = argh.ArghParser()
 parser.set_default_command(parse_args)
 parser.dispatch()
 
-SQL = "INSERT INTO Code (code) VALUES (\'%s\');"
+SQL = "INSERT INTO Code (code) VALUES "
+print "Parsing ini file"
 cp = ConfigParser()
 cp.read("mysql.ini")
 host = cp.get(ARGS.env, 'host')
@@ -34,6 +35,7 @@ user = cp.get(ARGS.env, 'user')
 passw = cp.get(ARGS.env, 'password')
 db = cp.get(ARGS.env, 'database')
 
+print "Reading codes from file..."
 fd = open(ARGS.file)
 codelist = fd.readlines()
 fd.close()
@@ -41,11 +43,22 @@ fd.close()
 conn = MySQLdb.connect(host=host, user=user, passwd=passw, db=db)
 cursor = conn.cursor()
 if ARGS.truncate:
-    print "truncating"
-    cursor.execute("DELETE FROM %s.Code WHERE idCode > 0" % db)
-for code in codelist:
-    print "Inserting", code
-    cursor.execute(SQL % code)
+	print "Truncating table..."
+	cursor.execute("DELETE FROM %s.Code WHERE idCode > 0" % db)
+	print "Reset AUTO_INCREMENT table..."
+	cursor.execute("ALTER TABLE Code AUTO_INCREMENT = 0")
+n = len(codelist)*1.0
+codlist = map(lambda x: x.strip(), codelist)
+insertSql = SQL+"('"+"\'),(\'".join(codlist)+"');"
+i = 0.0
+print "Inserting"
+cursor.execute(insertSql)
+#~ for code in codelist:
+    #~ cursor.execute(SQL % code.strip())
+    #~ i+=1
+    #~ print "{0}/{1}".format(i,n), i/n*100," percent complete         \r",
+    #~ sys.stdout.flush()
+print ""
 conn.commit()
 conn.close()
 
