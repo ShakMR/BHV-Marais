@@ -18,7 +18,7 @@ class BhvDB extends DBHelper
     private static $insert_new_person_sql =    "INSERT INTO People (name, lastname, email) VALUES (?, ?, ?);";
     private static $insert_inscription_sql =   "INSERT INTO Inscription (People_idPerson, Code_idCode, Awards_idAward, date) VALUES(?, ?, ?, ?);";
 
-    private static $modify_award_sql =         "UPDATE Awards SET delivered=:_1 WHERE idAwards=:_2;";
+    private static $modify_award_sql =         "UPDATE Awards SET delivered=true WHERE idAward=:_1;";
 
     private static $authenticate_sql =         "SELECT COUNT(*) FROM access WHERE username=:_1 AND password=PASSWORD(:_2);";
 
@@ -40,7 +40,7 @@ class BhvDB extends DBHelper
         }
     }
 
-    public static function register ($name, $lastname, $email, $idCode, $idAward, $date)
+    private static function register ($name, $lastname, $email, $idCode, $idAward, $date)
     {
         self::executeStatement(self::$search_person_sql, $email);
         if (count(self::$result) >= 1)
@@ -71,7 +71,7 @@ class BhvDB extends DBHelper
         }
     }
 
-    public static function check_awards ($date)
+    private static function check_awards ($date)
         /**
          * Returns the award id if is awarded, return null otherwise.
          */
@@ -84,7 +84,7 @@ class BhvDB extends DBHelper
         return null;
     }
 
-    public static function get_valid_code ($code)
+    private static function get_valid_code ($code)
     {
         self::executeStatement(self::$search_code_sql, $code);
         $n = count(self::$result);
@@ -95,14 +95,79 @@ class BhvDB extends DBHelper
         throw new Exception(StringDispenser::get_code_invalid_string());
     }
 
+    private static function deliver_award($idAward)
+    {
+        self::connect();
+        self::executeStatement(self::$modify_award_sql, $idAward);
+        self::close();
+    }
+
     public static function new_inscription($name, $lastname, $email, $date, $code)
     {
         self::connect();
         $idCode = self::get_valid_code($code);
-        $idAwars = self::check_awards($date);
-        self::register($name, $lastname, $email, $idCode, $idAwars, $date);
-        $id = self::$db->lastInsertId();
+        $idAwards = self::check_awards($date);
+        self::register($name, $lastname, $email, $idCode, $idAwards, $date);
+//        $id = self::$db->lastInsertId();
+        self::deliver_award($idAwards);
         self::close();
-        return $id;
+        return !is_null($idAwards);
     }
+
+    public static function generate_session()
+    {
+        session_start();
+        $_SESSION['user'] = 'bhv-marais';
+        $_SESSION['timestamp'] = time();
+        session_commit();
+    }
+
+    public static function authenticate($username, $password)
+    {
+        self::connect();
+        self::executeStatement(self::$authenticate_sql, $username, $password);
+        self::close();
+        if (self::$result[0][0] == 1)
+        {
+            self::generate_session();
+            return true;
+        }
+        return false;
+    }
+
+    /*
+     * Helper functions for unitest
+     */
+
+    public static function clear_people()
+    {
+        assert(parent::$env == "dev", "Forbidden in production environment");
+        $sql = "DELETE FROM People WHERE idPerson != -1";
+        self::connect();
+        self::executeStatement($sql);
+        self::close();
+        assert(parent::$error != '00000');
+    }
+
+    public static function clear_inscription()
+    {
+        assert(parent::$env == "dev", "Forbidden in production environment");
+        $sql = "DELETE FROM Inscription WHERE idInscription != -1";
+        self::connect();
+        self::executeStatement($sql);
+        self::close();
+        assert(parent::$error != '00000');
+    }
+
+    public static function restore_dump($dumpfile)
+    {
+        assert(parent::$env == "dev", "Forbidden in production environment");
+        $fd = fopen($dumpfile, 'r');
+        $sql = fread($fd, filesize($dumpfile));
+        $transstmt = new StatementHelper($sql);
+        self::connect();
+        self::executeTransactionStatement($transstmt);
+        self::close();
+    }
+
 }

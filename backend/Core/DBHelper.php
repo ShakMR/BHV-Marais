@@ -12,9 +12,10 @@ class DBHelper {
     private static $password;
     protected static $db;
     protected static $inifile='mysql.ini';
-    private static $env='dev';
+    protected static $env='dev';
 
     protected static $result;
+    protected static $error;
 
 
     public static function connect () {
@@ -46,7 +47,13 @@ class DBHelper {
         $stmt->execute();
         //print_r($stmt);
 
-        self::$result = $stmt->fetchAll();
+        if (strpos($sql, "SELECT") !== false) {
+            self::$result = $stmt->fetchAll();
+        }
+        if ($stmt->errorCode() != '00000')
+        {
+            throw new Exception($stmt->errorInfo()[2]);
+        }
         //print_r(self::$result);
     }
 
