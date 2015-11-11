@@ -11,18 +11,19 @@ class DBHelper {
     private static $dbname;
     private static $password;
     protected static $db;
-    private static $inifile;
+    protected static $inifile='mysql.ini';
     private static $env='dev';
 
     protected static $result;
 
 
     public static function connect () {
+        self::read_config_file();
         self::$db = new PDO ("mysql:host=".self::$hostname.";dbname=".self::$dbname,self::$username,self::$password);
     }
 
     private static function read_config_file() {
-        $config = parse_ini_file(self::$inifile, true)[self::$inifile];
+        $config = parse_ini_file(self::$inifile, true)[self::$env];
         self::$hostname = $config['host'];
         self::$dbname = $config['database'];
         self::$username = $config['user'];
@@ -53,21 +54,48 @@ class DBHelper {
         // expected array of arrays
     {
         assert(is_array($statements));
-        assert(is_)
+        assert(get_class($statements[0]) == StatementHelper::TAG);
+
+        self::$db->beginTransaction();
+        try {
+            foreach ($statements as $statement) {
+                $stmt = self::$db->prepare($statement->get_SQL());
+                $params = $statement->get_params();
+                $stmt->execute($params);
+               /* $n = count($params);
+                $i = 1;
+                while ($i < $n)
+                {
+                    $stmt->bindParam(':_'.$i, $params[$i]);
+                    ++$i;
+                }*/
+            }
+        }
+        catch (Exception $exception) {
+            self::$db->rollBack();
+            self::$db->close();
+            throw $exception;
+        }
+        self::$db->commit ();
+    }
+
+    public function close() {
+        self::$db = null;
     }
 
 
-    protected function today()
+    public function today()
     {
-        $date = date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $date)));
+        return date("Y-m-d H:i:s");
     }
 };
 
 class StatementHelper {
     private $sql;
     private $parameters;
+    const TAG = "StatementHelp";
 
-    function __construct($sql, $parameters=null) {
+    function __construct($sql, $parameters=array()) {
         assert(is_array($parameters));
         $this->sql = $sql;
         $this->parameters = $parameters;
@@ -76,6 +104,15 @@ class StatementHelper {
     public function add_parameter($param)
     {
         array_push($this->parameters, $param);
+    }
+
+    public function get_SQL(){
+        return $this->sql;
+    }
+
+    public function get_params()
+    {
+        return $this->parameters;
     }
 
 }
