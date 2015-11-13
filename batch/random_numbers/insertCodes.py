@@ -29,7 +29,7 @@ parser.dispatch()
 SQL = "INSERT INTO Code (code) VALUES "
 print "Parsing ini file"
 cp = ConfigParser()
-cp.read("mysql.ini")
+cp.read("../mysql.ini")
 host = cp.get(ARGS.env, 'host')
 user = cp.get(ARGS.env, 'user')
 passw = cp.get(ARGS.env, 'password')
