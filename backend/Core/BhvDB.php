@@ -47,6 +47,11 @@ class BhvDB extends DBHelper
     private static $modify_award_sql =         "UPDATE Awards SET delivered=true WHERE idAward=:_1;";
 
     /**
+     * @var string SQL query to increase the probability of an Awards as delivered
+     */
+    private static $increase_prob_award_sql =  "UPDATE Awards SET probability=:_2 WHERE idAward=:_1;";
+
+    /**
      * @var string SQL query to check for a matching username and password
      */
     private static $authenticate_sql =         "SELECT COUNT(*) FROM access WHERE username=:_1 AND password=PASSWORD(:_2);";
@@ -68,6 +73,7 @@ class BhvDB extends DBHelper
      * id column name for awards
      */
     const Award_id  = "idAward";
+    const Award_prob= "probability";
     /**
      * id column name for inscriptions
      */
@@ -147,7 +153,11 @@ class BhvDB extends DBHelper
         self::executeStatement(self::$remaining_awards_sql, $date);
         $n = count(self::$result);
         if ($n >= 1) {
-            return self::$result[0][self::Award_id];
+            $prob = self::$result[0][self::Award_prob];
+            if ($prob * 100 > random_int(0, 100)) {
+                return self::$result[0][self::Award_id];
+            }
+            self::executeStatement(self::$increase_prob_award_sql, self::$result[0][self::Award_id], $prob+0.15);
         }
         return null;
     }
