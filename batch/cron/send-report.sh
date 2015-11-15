@@ -1,5 +1,5 @@
 #!/bin/bash
-cd pdf
+
 get_mimetype(){
   # warning: assumes that the passed file exists
   file --mime-type "$1" | sed 's/.*: //' 
@@ -13,7 +13,7 @@ subject="Report test"
 boundary="ZZ_/afg6432dfgkl.94531q"
 body="This is a report test"
 declare -a attachments
-attachments=( "report.pdf, inscriptions.csv" )
+attachments=("report.pdf" "inscriptions.csv")
 
 # Build headers
 {
@@ -35,7 +35,6 @@ $body
 # now loop over the attachments, guess the type
 # and produce the corresponding part, encoded base64
 for file in "${attachments[@]}"; do
-
   [ ! -f "$file" ] && echo "Warning: attachment $file not found, skipping" >&2 && continue
 
   mimetype=$(get_mimetype "$file")
