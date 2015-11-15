@@ -9,7 +9,6 @@
 require_once("DBHelper.php");
 require_once("StringDispenser.php");
 
-
 /**
  * Class BhvDB
  * This class is used as a adapter to acces de database using the minimum function
