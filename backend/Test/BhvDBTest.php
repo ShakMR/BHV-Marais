@@ -72,11 +72,4 @@ class BhvDBTest extends PHPUnit_Framework_TestCase
         if (!$error)
             $this->fail();
     }
-
-
-    public function testAuthenticationOK() {
-        $username = "bhv-marais";
-        $password = "dwph4DVq";
-        $this->assertTrue(BhvDB::authenticate($username, $password));
-    }
 }
