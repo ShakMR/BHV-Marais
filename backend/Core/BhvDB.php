@@ -9,6 +9,7 @@
 require_once("DBHelper.php");
 require_once("StringDispenser.php");
 
+
 /**
  * Class BhvDB
  * This class is used as a adapter to acces de database using the minimum function
@@ -47,6 +48,11 @@ class BhvDB extends DBHelper
     private static $modify_award_sql =         "UPDATE Awards SET delivered=true WHERE idAward=:_1;";
 
     /**
+     * @var string SQL query to increase an Award's probability
+     */
+    private static $increase_award_sql =         "UPDATE Awards SET probability=:_2 WHERE idAward=:_1;";
+
+    /**
      * @var string SQL query to check for a matching username and password
      */
     private static $authenticate_sql =         "SELECT COUNT(*) FROM access WHERE username=:_1 AND password=PASSWORD(:_2);";
@@ -68,6 +74,7 @@ class BhvDB extends DBHelper
      * id column name for awards
      */
     const Award_id  = "idAward";
+    const Award_prob= "probability";
     /**
      * id column name for inscriptions
      */
@@ -147,7 +154,13 @@ class BhvDB extends DBHelper
         self::executeStatement(self::$remaining_awards_sql, $date);
         $n = count(self::$result);
         if ($n >= 1) {
-            return self::$result[0][self::Award_id];
+            $r = get_float_rand();
+            if ($r < self::$result[0][self::Award_prob]) {
+                return self::$result[0][self::Award_id];
+            }
+            else {
+                self::executeStatement(self::$increase_award_sql, self::$result[0][self::Award_id], self::$result[0][self::Award_prob]+0.15);
+            }
         }
         return null;
     }
