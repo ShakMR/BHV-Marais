@@ -17,7 +17,7 @@ class StringDispenser
     const AUTH_FAIL = "authentication_not_valid";
 
     private static function load_strings() {
-        $error_file_parsed = parse_ini_file(self::$error_file, true);
+        $error_file_parsed = parse_ini_file(realpath(dirname(__FILE__))."/".self::$error_file, true);
         $lang = $error_file_parsed['lang']['lang'];
         self::$strings = $error_file_parsed[$lang];
     }

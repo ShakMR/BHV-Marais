@@ -3,11 +3,11 @@
 <?php
 	$init_session = new BhvDB;
 
-	$result = $init_session->authenticate($_POST['username'], $_POST['password']);
-	
-	if($result){
+	try {
+		$result = $init_session->authenticate($_POST['username'], $_POST['password']);
 		header('location:index.php');
-	}else{
-		echo "Usuario Incorrecto";
+	}
+	catch (Exception $e) {
+		echo  $e->getMessage();
 	}
 ?>

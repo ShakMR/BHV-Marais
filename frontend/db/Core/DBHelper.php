@@ -102,7 +102,7 @@ class DBHelper {
     /**
      *
      */
-    public function close() {
+    public static function close() {
         self::$db = null;
     }
 

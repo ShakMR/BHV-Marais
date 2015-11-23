@@ -234,6 +234,7 @@ class BhvDB extends DBHelper
         self::connect();
         self::executeStatement(self::$authenticate_sql, $username, $password);
         self::close();
+        print_r(self::$result);
         if (self::$result[0][0] == 1)
         {
             self::generate_session();
