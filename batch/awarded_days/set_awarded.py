@@ -7,13 +7,14 @@ class Args:
     npresents = 4
     startprob = 0.15
 
-
-
 @arg('-r', '--regalos', default=4, help='Set the number of presents')
-@arg('-p', '--probability', default=1, help='Set the starting probability')
+@arg('-p', '--probability', default=0.15, help='Set the starting probability')
 def parse_args(**kwargs):
     Args.npresents = kwargs['regalos']
     Args.startprob = kwargs['probability']
+
+parser = argh.ArghParser()
+parser.set_default_command(parse_args)
 
 class Day:
 
@@ -73,16 +74,19 @@ def main():
     DR = D/float(N)
     dia = 0
     choosen = []
+    print N, D, DR
     while dia < D:
-        rightinter = min(D, int(dia+DR))
-        choose = random_assign(cal, dia, rightinter)
+        print dia, dia+DR, int(dia), int(round(dia+DR))
+        rightinter = min(D, int(round((dia)+DR)))
+        choose = random_assign(cal, int(dia), rightinter)
         choosen.append(choose)
-        dia += int(DR)+1
+        dia = dia+DR
 
     for c in choosen:
-        SQL = "INSERT INTO Awards (activation_date, delivered) VALUES (\""+str(c)+"\", 0);"
+        SQL = "INSERT INTO Awards (activation_date, delivered, probability) VALUES (\""+str(c)+"\", 0, "+str(Args.startprob)+");"
         print SQL
 
 
 if __name__ == "__main__":
+    parser.dispatch()
     main()

@@ -1,4 +1,12 @@
-INSERT INTO Awards (activation_date, delivered) VALUES ("2015-11-26 15:00:00", 0);
-INSERT INTO Awards (activation_date, delivered) VALUES ("2015-12-03 15:00:00", 0);
-INSERT INTO Awards (activation_date, delivered) VALUES ("2015-12-15 16:00:00", 0);
-INSERT INTO Awards (activation_date, delivered) VALUES ("2015-12-21 17:00:00", 0);
+INSERT INTO Awards (activation_date, delivered, probability) VALUES ("2015-11-28 15:00:00", 0, 0.15);
+INSERT INTO Awards (activation_date, delivered, probability) VALUES ("2015-11-30 11:00:00", 0, 0.15);
+INSERT INTO Awards (activation_date, delivered, probability) VALUES ("2015-12-03 16:00:00", 0, 0.15);
+INSERT INTO Awards (activation_date, delivered, probability) VALUES ("2015-12-05 12:00:00", 0, 0.15);
+INSERT INTO Awards (activation_date, delivered, probability) VALUES ("2015-12-06 17:00:00", 0, 0.15);
+INSERT INTO Awards (activation_date, delivered, probability) VALUES ("2015-12-09 16:00:00", 0, 0.15);
+INSERT INTO Awards (activation_date, delivered, probability) VALUES ("2015-12-12 13:00:00", 0, 0.15);
+INSERT INTO Awards (activation_date, delivered, probability) VALUES ("2015-12-14 13:00:00", 0, 0.15);
+INSERT INTO Awards (activation_date, delivered, probability) VALUES ("2015-12-17 17:00:00", 0, 0.15);
+INSERT INTO Awards (activation_date, delivered, probability) VALUES ("2015-12-20 18:00:00", 0, 0.15);
+INSERT INTO Awards (activation_date, delivered, probability) VALUES ("2015-12-22 15:00:00", 0, 0.15);
+INSERT INTO Awards (activation_date, delivered, probability) VALUES ("2015-12-24 08:00:00", 0, 0.15);
