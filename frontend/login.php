@@ -3,11 +3,12 @@
 <?php
 	$init_session = new BhvDB;
 
-	try {
+	try{
 		$result = $init_session->authenticate($_POST['username'], $_POST['password']);
 		header('location:index.php');
 	}
-	catch (Exception $e) {
-		echo  $e->getMessage();
+	catch( Exception $e){
+		echo $e->getMessage();
+		header('location:index.php');
 	}
 ?>

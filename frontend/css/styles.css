@@ -78,7 +78,8 @@ input:focus{
 	color:white;
 }
 
-.form-submit:active{
+.form-submit:active,
+.button-restart{
 	background-color: #b71c1c;
 }
 
@@ -96,11 +97,15 @@ input:focus{
 	margin:10px 10px 0px 10px;
 }
 
-.form-alert{
-	display:none;
+.form-alert,
+.login-alert{
 	text-align: center;
 	color:red;
 	font-weight: bold;
+}
+
+.form-alert{
+	display:none;
 }
 
 .back-img{
@@ -139,6 +144,17 @@ input:focus{
 
 .error-field{
 	background-color: #ffcdd2;
+}
+
+.button-restart{
+	padding: 20px;
+	border-bottom: 4px solid rgb(183, 28, 28);
+	background-color: red;
+	color: white;
+	border-radius: 3px;
+	text-decoration: none;
+	display: block;
+	text-align: center;
 }
 
 

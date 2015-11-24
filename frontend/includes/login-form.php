@@ -1,6 +1,6 @@
 
 <body>
-<form class="login-form" action="login.php" method="post" autocomplete="off">
+<form class="login-form" action="index.php" method="post" autocomplete="off">
 	<section class="form-block form-block-info">
 		<img class="form-logo" src="img/logoNoel.jpg">
 		<p class="form-note">

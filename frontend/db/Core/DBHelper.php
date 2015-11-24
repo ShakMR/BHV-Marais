@@ -10,10 +10,12 @@ class DBHelper {
     private static $username;
     private static $dbname;
     private static $password;
+    /** @var PDO self::$db*/
     protected static $db;
     protected static $inifile='mysql.ini';
     protected static $env='dev';
 
+    /** @var  array $result */
     protected static $result;
     protected static $error;
 

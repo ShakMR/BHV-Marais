@@ -1,9 +1,5 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 /*
  * Created by PhpStorm.
  * User: borja
@@ -51,6 +47,11 @@ class BhvDB extends DBHelper
     private static $modify_award_sql =         "UPDATE Awards SET delivered=true WHERE idAward=:_1;";
 
     /**
+     * @var string SQL query to increase an Award's probability
+     */
+    private static $increase_award_sql =         "UPDATE Awards SET probability=:_2 WHERE idAward=:_1;";
+
+    /**
      * @var string SQL query to check for a matching username and password
      */
     private static $authenticate_sql =         "SELECT COUNT(*) FROM access WHERE username=:_1 AND password=PASSWORD(:_2);";
@@ -72,6 +73,7 @@ class BhvDB extends DBHelper
      * id column name for awards
      */
     const Award_id  = "idAward";
+    const Award_prob= "probability";
     /**
      * id column name for inscriptions
      */
@@ -79,7 +81,7 @@ class BhvDB extends DBHelper
 
     /**
      * Executes an SQL query with or without params but do not commits the transaction
-     * @param $statement StatementHelper
+     * @param StatementHelper $statement
      * @throws Exception MYSQL Exception
      */
     private static function executeTransactionStatement ($statement) {
@@ -90,7 +92,7 @@ class BhvDB extends DBHelper
         }
         catch (Exception $exception) {
             self::$db->rollBack();
-            self::$db->close();
+            self::close();
             throw $exception;
         }
     }
@@ -151,7 +153,13 @@ class BhvDB extends DBHelper
         self::executeStatement(self::$remaining_awards_sql, $date);
         $n = count(self::$result);
         if ($n >= 1) {
-            return self::$result[0][self::Award_id];
+            $r = get_float_rand();
+            if ($r < self::$result[0][self::Award_prob]) {
+                return self::$result[0][self::Award_id];
+            }
+            else {
+                self::executeStatement(self::$increase_award_sql, self::$result[0][self::Award_id], self::$result[0][self::Award_prob]+0.15);
+            }
         }
         return null;
     }
@@ -183,6 +191,11 @@ class BhvDB extends DBHelper
         self::connect();
         self::executeStatement(self::$modify_award_sql, $idAward);
         self::close();
+    }
+
+    private static function send_participation_mail($name, $lastname)
+    {
+
     }
 
     /**
@@ -234,7 +247,6 @@ class BhvDB extends DBHelper
         self::connect();
         self::executeStatement(self::$authenticate_sql, $username, $password);
         self::close();
-        print_r(self::$result);
         if (self::$result[0][0] == 1)
         {
             self::generate_session();
