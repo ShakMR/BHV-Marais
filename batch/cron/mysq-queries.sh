@@ -5,13 +5,17 @@ query () {
 }
 
 query inscriptions.sql > inscriptions.csv &
-cp inscriptions.csv pdf/
-query insxdia.sql > insxdia.csv &
+#if [[ `file inscriptions.csv | grep empty` ]]; then
+	echo "zero inscriptions"
+#else
+	cp inscriptions.csv pdf/
+	query insxdia.sql > insxdia.csv &
 
-query insxhora.sql > insxhora.csv &
+	query insxhora.sql > insxhora.csv &
 
-query insxmin.sql > insxmin.csv &
+	query insxmin.sql > insxmin.csv &
 
-python generate_pdf.py > report.tex && \
-pdflatex report.tex && bash send-report.sh
-
+	python generate_pdf.py > report.tex && \
+	pdflatex report.tex && bash send-report.sh
+#fi
+	

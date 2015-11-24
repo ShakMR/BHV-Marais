@@ -25,6 +25,8 @@ def latex_table(caption, colheader, data):
     return txt
 
 def preproces(CSV):
+    if len(CSV)==0:
+	return ["Empty"], []
     header = CSV[0].rstrip().split(',')
     data = map(lambda x: x.rstrip().split(','), CSV[1:])
     return header, data

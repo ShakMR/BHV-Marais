@@ -11,7 +11,7 @@ from="suilabs@suilabs.com"
 to="borja.arias.upc@gmail.com"
 subject="Report test"
 boundary="ZZ_/afg6432dfgkl.94531q"
-body="This is a report test"
+body="Please find attached the dayly report for users incripstions. This is an automated email, so please do not answer this, instead write to borja@suilabs.com"
 declare -a attachments
 attachments=("report.pdf" "inscriptions.csv")
 
@@ -52,4 +52,4 @@ done
 # print last boundary with closing --
 printf '%s\n' "--${boundary}--"
 
-} | sendmail -t -oi   # one may also use -f here to set the envelope-from
+} | sendmail -t -oi  && echo "MESSAGE SENDED CORRECTLY"
