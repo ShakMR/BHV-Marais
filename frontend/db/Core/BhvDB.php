@@ -8,7 +8,7 @@
  */
 require_once("DBHelper.php");
 require_once("StringDispenser.php");
-
+require_once("Mailer.php");
 /**
  * Class BhvDB
  * This class is used as a adapter to acces de database using the minimum function
@@ -193,11 +193,6 @@ class BhvDB extends DBHelper
         self::close();
     }
 
-    private static function send_participation_mail($name, $lastname)
-    {
-
-    }
-
     /**
      * This function check if the code is valid, if it's awarded, register the inscription and change the award state if
      * needed.
@@ -216,9 +211,20 @@ class BhvDB extends DBHelper
         $idCode = self::get_valid_code($code);
         $idAwards = self::check_awards($date);
         self::register($name, $lastname, $email, $idCode, $idAwards, $date);
+        $m = new Mailer(new MailParticipation());
+        $m->bindParams([
+            "name"=>$name,
+            "lastname"=>$lastname,
+            "email"=>$email,
+            "date"=>$date,
+            "code"=>$code
+            ]);
+        $m->sendMail();
 //        $id = self::$db->lastInsertId();
         if (!is_null($idAwards)) {
             self::deliver_award($idAwards);
+            $wm = new Mailer(new MailWinner());
+            $wm->sendMail();
         }
         self::close();
         return !is_null($idAwards);

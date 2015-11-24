@@ -35,7 +35,7 @@ class MailWinner extends MailTypes {
     const SUBJECT = "Nous avons un gagnant";
     const FILE = "../Strings/winner_template.html";
 //    const MAIL_ARRAY = "lpiovan@bhv.fr, relationclientele@bhv.fr,aroussillon@bhv.fr,ggutnick@bhv.fr,nzignone@bhv.fr,sauclair@bhv.fr,adupeux@bhv.fr";
-    const MAIL_ARRAY = "borja.arias.upc@gmail.com";
+    const MAIL_ARRAY = "borja@suilabs.com";
     const FROM = "suilabs@suilabs.com";
 }
 
@@ -102,12 +102,3 @@ class Mailer
             throw new Exception("Correo no enviado");
     }
 }
-
-$m = new Mailer(new MailWinner());
-//$m->getMailParametersName();
-$m->bindParams(["name"=>"Borja",
-                "lastname"=>"Arias",
-                "email"=>"borja.arias.upc@gmail.com",
-                "code"=>"A000001",
-                "date"=>"2015-11-24"]);
-$m->sendMail();
