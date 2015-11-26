@@ -68,7 +68,7 @@ jQuery(document).ready(function($) {
 		var $mail 		= $( ".form-field[name='email']" );
 		var $info		= $( ".form-check[name='info']" );
 
-		if(!$info.checked){
+		if($info[0].checked){
 			$info = "Wants more information";
 		}else{
 			$info = "Not checked"
