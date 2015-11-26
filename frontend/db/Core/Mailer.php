@@ -100,6 +100,12 @@ class Mailer
         $this->_sendMail($from, $rep, $mails, $subject, $this->raw_html);
     }
 
+
+    public function today()
+    {
+        return date("Y-m-d H:i:s");
+    }
+
     private function _sendMail($_from, $_rep, $_to, $_subj, $_msg) {
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type: text/html; charset=utf-8" . "\r\n";
@@ -107,5 +113,6 @@ class Mailer
             'X-Mailer: PHP/' . phpversion();
         if (!mail($_to, $_subj, $_msg, $headers))
             throw new Exception("Correo no enviado");
+        file_put_contents("mail.log", "[".$this->today()."]".$headers."\nto:".$_to, FILE_APPEND);
     }
 }
