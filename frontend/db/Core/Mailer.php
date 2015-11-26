@@ -107,6 +107,5 @@ class Mailer
             'X-Mailer: PHP/' . phpversion();
         if (!mail($_to, $_subj, $_msg, $headers))
             throw new Exception("Correo no enviado");
-        echo $headers;
     }
 }
