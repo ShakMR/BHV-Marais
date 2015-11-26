@@ -1,0 +1,197 @@
+html,
+body{
+	/*font-family:'Montserrat', sans-serif;*/
+	font-family: 'Alice', serif;
+	height:100%;
+	margin:0px;
+	padding:0px;
+}
+
+body{
+	display: flex;
+}
+
+form{
+	position: relative;
+	margin: 0px auto;
+	width: 400px;
+	height: 100%;
+	z-index: 999;
+}
+
+h2{
+	margin-bottom:30px;
+}
+
+p{
+	font-size: 14px;
+}
+
+input:focus{
+	border: 1px solid red;
+	box-sizing:border-box;
+}
+
+.login-form{
+	position: relative;
+	margin:0px auto;
+	width:500px;
+	top:50%;
+	margin-top:-280px;
+}
+
+.form-field{
+	font-family: 'Alice', serif;
+	width:100%;
+	height:45px;
+	display: block;
+	margin:0px 0px 15px 0px;
+	padding:0px;
+	font-size: 18px;
+	text-align: center;
+	border:0px;
+	border-radius: 3px;
+	background-color:#eae9e9;
+}
+
+.form-block{
+	margin:0px 40px;
+}
+
+
+.form-block-info{
+	background-color: white;
+	padding:20px 30px 2px 30px;
+	border-radius: 3px;
+}
+
+.form-logo{
+	display: block;
+	width:100%;
+	margin-bottom:35px;
+}
+
+.form-submit{
+	position: relative;
+	top:20px;
+	border:none;
+	margin-bottom:0px;
+	padding:15px 47px;
+	border-radius: 3px;
+	border-bottom:3px solid #b71c1c;
+	background-color: red;
+	color:white;
+}
+
+.form-submit:active,
+.button-restart{
+	background-color: #b71c1c;
+}
+
+.form-login-submit{
+	width:100%;
+	height:45px;
+}
+
+.form-note{
+	text-align: center;
+	color:gray;
+}
+
+.form-code{
+/*	background-color:#f6d5b2;
+	color:#683705;*/
+}
+
+.form-check{
+	margin:10px 10px 0px 10px;
+}
+
+.form-alert,
+.login-alert{
+	text-align: center;
+	color:red;
+	font-weight: bold;
+}
+
+.form-alert{
+	display:none;
+}
+
+.img-wrapper{
+	width:25%;
+	/*height:100%;*/
+	overflow: hidden;
+}
+
+.back-img{
+    position: relative;
+	width: 320px;
+    display: block;
+    top: 0px;
+}
+
+.back-img-d,
+.back-img-g{
+    position: fixed;
+    display: block;
+    top: 50%;
+    margin-top: -300px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.back-img-d{
+	right:0px;
+}
+
+.back-img-g{
+	left:0px;
+}
+
+.end-session-button{
+	position: fixed;
+	bottom: 0px;
+	color: red;
+	left: 0px;
+	padding: 20px;
+}
+
+.result{
+	font-size: 48px;
+	color:red;
+	text-align: center;
+}
+
+.result-second{
+	font-size:24px;
+	color:red;
+	text-align:center;
+}
+
+.not-margin-bottom{
+	margin-bottom:0px !important;
+}
+
+.error-field{
+	background-color: #ffcdd2;
+}
+
+.button-restart{
+	padding: 20px;
+	border-bottom: 4px solid rgb(183, 28, 28);
+	background-color: red;
+	color: white;
+	border-radius: 3px;
+	text-decoration: none;
+	display: block;
+	text-align: center;
+	width: 300px;
+	margin: 0px auto;
+	font-size: 21px;
+	position: relative;
+	top: 20px;
+}
+
+
+

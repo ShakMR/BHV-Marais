@@ -1,4 +1,4 @@
-# BHV-Marais
+
 Repositorio de trabajo para el evento de BHV Marais
 
 # Ramas
@@ -33,6 +33,7 @@ Seguimos los siguientes pasos (tanto si se usa un programa como por terminal):
  git checkout frontend  #cambiamos a la rama frontend
  git merge frontend_dev #descargamos los cambios hechos en dev
 ```
+
 
 
 
