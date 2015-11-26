@@ -66,7 +66,7 @@ jQuery(document).ready(function($) {
 		var $name 		= $( ".form-field[name='name']" );
 		var $lastname 	= $( ".form-field[name='lastname']" );
 		var $mail 		= $( ".form-field[name='email']" );
-		var $info		= $( ".form-field[name='info']" );
+		var $info		= $( ".form-check[name='info']" );
 
 		if(!$info.checked){
 			$info = "Wants more information";
