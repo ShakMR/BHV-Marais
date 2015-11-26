@@ -215,18 +215,18 @@ class BhvDB extends DBHelper
         $idAwards = self::check_awards($date);
         self::register($name, $lastname, $email, $idCode, $idAwards, $date);
         $m = new Mailer(new MailParticipation());
-        $m->bindParams([
-            "name"=>$name,
-            "lastname"=>$lastname,
-            "email"=>$email,
-            "date"=>$date,
-            "code"=>$code
-            ]);
         $m->sendMail();
 //        $id = self::$db->lastInsertId();
         if (!is_null($idAwards)) {
             self::deliver_award($idAwards);
             $wm = new Mailer(new MailWinner());
+            $wm->bindParams([
+                "name"=>$name,
+                "lastname"=>$lastname,
+                "email"=>$email,
+                "date"=>$date,
+                "code"=>$code
+            ]);
             $wm->sendMail();
         }
         self::close();
