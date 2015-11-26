@@ -25,7 +25,7 @@ class Inscription {
 }
 
 echo "Preparing database for unittest\n";
-BhvDB::restore_dump("bhv_dev-dump.sql");
+//BhvDB::restore_dump("bhv_dev-dump.sql");
 echo "DONE\nStarting UnitTest...\n";
 
 
@@ -36,10 +36,14 @@ class BhvDBTest extends PHPUnit_Framework_TestCase
     {
 //        BhvDB::clear_inscription();
 //        BhvDB::clear_people();
-        $ins = new Inscription("name1", "lastname1", "email1", "05TRG");
-        $ret = BhvDB::new_inscription($ins->name, $ins->lastname, $ins->email, DBHelper::today(), $ins->code);
+        $ins = new Inscription("name1", "lastname1", "email2", "A000001");
+        try {
+            $ret = BhvDB::new_inscription($ins->name, $ins->lastname, $ins->email, DBHelper::today(), $ins->code);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            $this->fail();
+        }
 
-        $this->assertTrue($ret);
     }
 
     public function testNewInscriptionNotAwarded()

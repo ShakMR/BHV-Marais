@@ -13,6 +13,7 @@ class MailTypes {
     const SUBJECT = "";
     const MAIL_ARRAY = "";
     const FROM = "";
+    const REPLYTO ="";
 
     public function subject() {
         return static::SUBJECT;
@@ -29,21 +30,27 @@ class MailTypes {
     public function from() {
         return static::FROM;
     }
+
+    public function replyto() {
+        return static::REPLYTO;
+    }
 }
 
 class MailWinner extends MailTypes {
     const SUBJECT = "Nous avons un gagnant";
     const FILE = "../Strings/winner_template.html";
 //    const MAIL_ARRAY = "lpiovan@bhv.fr, relationclientele@bhv.fr,aroussillon@bhv.fr,ggutnick@bhv.fr,nzignone@bhv.fr,sauclair@bhv.fr,adupeux@bhv.fr";
-    const MAIL_ARRAY = "borja@suilabs.com";
+    const MAIL_ARRAY = "borja.arias.upc@gmail.com";
     const FROM = "suilabs@suilabs.com";
+    const REPLYTO = "suilabs@suilabs.com";
 }
 
 class MailParticipation extends MailTypes
 {
     const SUBJECT = "Merci pour votre participation";
     const FILE = "../Strings/participation_template.html";
-    const FROM = "relationclientele@bhv.fr";
+    const REPLYTO = "relationclientele@bhv.fr";
+    const FROM = "BHV-Marais<suilabs@suilabs.com>";
 }
 
 class Mailer
@@ -74,11 +81,10 @@ class Mailer
     public function bindParams($params) {
         $keys = array_keys($params);
         foreach ($keys as $key) {
-            $re = "/\\{\\{".$key."\\}\\}/";
+            $re = "/{{".$key."}}/";
             $this->raw_html = preg_replace($re, $params[$key], $this->raw_html);
         }
         $this->user_mail = $params["email"];
-        echo $this->raw_html;
     }
 
     public function to($email) {
@@ -86,19 +92,21 @@ class Mailer
     }
 
     public function sendMail() {
-        $subjet = $this->type->subject();
+        $subject = $this->type->subject();
         $aux_mails = $this->type->mail_array();
         $mails = $aux_mails == "" ? $this->user_mail : $aux_mails;
         $from = $this->type->from();
-        $this->_sendMail($from, $mails, $subjet, $this->raw_html);
+        $rep = $this->type->replyto();
+        $this->_sendMail($from, $rep, $mails, $subject, $this->raw_html);
     }
 
-    private function _sendMail($_from, $_to, $_subj, $_msg) {
+    private function _sendMail($_from, $_rep, $_to, $_subj, $_msg) {
         $headers = "MIME-Version: 1.0" . "\r\n";
-        $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n";
-        $headers .= 'From: '.$_from."\r\n".'Reply-To: '. $_from . "\r\n" .
+        $headers .= "Content-type: text/html; charset=utf-8" . "\r\n";
+        $headers .= 'From: '.$_from."\r\n".'Reply-To: '. $_rep . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
         if (!mail($_to, $_subj, $_msg, $headers))
             throw new Exception("Correo no enviado");
+        echo $headers;
     }
 }

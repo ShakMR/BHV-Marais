@@ -12,7 +12,8 @@
         print "<a class='button-restart' href='index.php'>PRUEBA SUERTE EN EL CONCURSO</a>";
         $error = true;
     }
-    if (!$error)
-        $this->fail();
-
+    if ($ret)
+        echo "congrats<br>";
+    else
+        echo "Better luck next time<br>";
 ?>

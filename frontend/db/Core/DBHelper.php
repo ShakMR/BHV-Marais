@@ -98,7 +98,6 @@ class DBHelper {
             self::$db->close();
             throw $exception;
         }
-        self::$db->commit ();
     }
 
     /**

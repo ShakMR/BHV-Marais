@@ -9,6 +9,9 @@
 require_once("DBHelper.php");
 require_once("StringDispenser.php");
 require_once("Mailer.php");
+require_once(realpath(dirname(__FILE__))."/../utils.php");
+
+
 /**
  * Class BhvDB
  * This class is used as a adapter to acces de database using the minimum function
