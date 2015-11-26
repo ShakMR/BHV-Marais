@@ -94,7 +94,9 @@ class Mailer
     public function sendMail() {
         $subject = $this->type->subject();
         $aux_mails = $this->type->mail_array();
-        $mails = $aux_mails == "" ? $this->user_mail : $aux_mails;
+        $mails = $this->user_mail;
+        if ($aux_mails)
+            $mails = $aux_mails;
         $from = $this->type->from();
         $rep = $this->type->replyto();
         $this->_sendMail($from, $rep, $mails, $subject, $this->raw_html);
