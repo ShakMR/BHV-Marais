@@ -1,7 +1,4 @@
 <body>
-<div class="img-wrapper">
-	<img class="back-img back-img-g"src="img/paraplui.jpg">
-</div>
 <form method="post" autocomplete="off">
 	<section class="form-block form-block-info">
 		<img class="form-logo" src="img/logoNoel.jpg">
@@ -24,10 +21,13 @@
 		J'autorise LE BHV MARAIS à utiliser mon adresse email à des fins commerciales.<br>
 		<a href="#">Lire les conditions</a>
 		</p>
-		<input class="form-field form-submit" name="submit" type="submit" value="JE TENTE MA CHANCE">
+		<a class="form-submit" name="submit">JE TENTE MA CHANCE</a>
 		<a class="end-session-button" target="_blacnk" href="logout.php">Fermer l'application</a>
 	</section>
 </form>
+<div class="img-wrapper">
+	<img class="back-img back-img-g"src="img/paraplui.jpg">
+</div>
 <div class="img-wrapper">
 	<img class="back-img back-img-d"src="img/papanoel.jpg">
 </div>

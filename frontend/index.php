@@ -1,4 +1,5 @@
 <?php require 'db/Core/BhvDB.php'; ?>
+
 <?php
 	$init = new BhvDB;
 
@@ -25,6 +26,7 @@
 		include("includes/login-form.php");
 	}
 ?>
+
 <?php 
 include("includes/footer.php");
 ?>

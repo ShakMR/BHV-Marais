@@ -14,10 +14,9 @@ body{
 form{
 	position: relative;
 	margin: 0px auto;
-	width: 33%;
+	width: 400px;
 	height: 100%;
-	top: 50%;
-	margin-top: -355px;
+	z-index: 999;
 }
 
 h2{
@@ -44,9 +43,9 @@ input:focus{
 .form-field{
 	font-family: 'Alice', serif;
 	width:100%;
-	height:50px;
+	height:45px;
 	display: block;
-	margin:0px 0px 25px 0px;
+	margin:0px 0px 15px 0px;
 	padding:0px;
 	font-size: 18px;
 	text-align: center;
@@ -73,16 +72,25 @@ input:focus{
 }
 
 .form-submit{
-	margin-top:30px;
-	border-bottom:4px solid #b71c1c;
+	position: relative;
+	top:20px;
+	border:none;
+	margin-bottom:0px;
+	padding:15px 47px;
+	border-radius: 3px;
+	border-bottom:3px solid #b71c1c;
 	background-color: red;
 	color:white;
-	margin-bottom:0px;
 }
 
 .form-submit:active,
 .button-restart{
 	background-color: #b71c1c;
+}
+
+.form-login-submit{
+	width:100%;
+	height:45px;
 }
 
 .form-note{
@@ -111,26 +119,34 @@ input:focus{
 }
 
 .img-wrapper{
-	width:33%;
-	height:100%;
+	width:25%;
+	/*height:100%;*/
 	overflow: hidden;
 }
 
 .back-img{
     position: relative;
-	width: 100%;
+	width: 320px;
     display: block;
     top: 0px;
 }
 
 .back-img-d,
 .back-img-g{
-    position: relative;
+    position: fixed;
     display: block;
     top: 50%;
     margin-top: -300px;
     margin-right: auto;
     margin-left: auto;
+}
+
+.back-img-d{
+	right:0px;
+}
+
+.back-img-g{
+	left:0px;
 }
 
 .end-session-button{

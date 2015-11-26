@@ -58,7 +58,7 @@ function changeLang(toChange){
 
 jQuery(document).ready(function($) {
 
-	$(document).on('click', '.form-submit', function(event) {
+	$(document).on('click touchstart', '.form-submit', function(event) {
 		event.preventDefault();			
 
 		var array		= [];
@@ -76,7 +76,7 @@ jQuery(document).ready(function($) {
 
 		if(!$code.val() || !$name.val() || !$lastname.val() || !$mail.val()){
 			// alert("Field/s empty");
-			var inputs = $(document).find('input:not(.form-submit)');
+			var inputs = $(document).find('input');
 			$.each(inputs, function(i, value) {
 				 if($(inputs[i]).val() == ""){
 				 	array.push(changeLang($(inputs[i]).attr('name')));

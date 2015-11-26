@@ -10,7 +10,7 @@
         </p>
         <input class="form-field form-code" name="username" type="text" placeholder="USERNAME">
         <input class="form-field" name="password" type="password" placeholder="PASSWORD">
-        <input class="form-field form-submit" name="submit" type="submit" value="LOG IN">
+        <input class="form-login-submit" name="submit" type="submit" value="LOG IN">
     </section>
 </form>
 <div class="img-wrapper">
