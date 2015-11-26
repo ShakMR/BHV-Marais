@@ -39,8 +39,8 @@ class MailTypes {
 class MailWinner extends MailTypes {
     const SUBJECT = "Nous avons un gagnant";
     const FILE = "../Strings/winner_template.html";
-//    const MAIL_ARRAY = "lpiovan@bhv.fr, relationclientele@bhv.fr,aroussillon@bhv.fr,ggutnick@bhv.fr,nzignone@bhv.fr,sauclair@bhv.fr,adupeux@bhv.fr";
-    const MAIL_ARRAY = "borja.arias.upc@gmail.com";
+    const MAIL_ARRAY = "lpiovan@bhv.fr, relationclientele@bhv.fr,aroussillon@bhv.fr,ggutnick@bhv.fr,nzignone@bhv.fr,sauclair@bhv.fr,adupeux@bhv.fr";
+//    const MAIL_ARRAY = "borja.arias.upc@gmail.com";
     const FROM = "suilabs@suilabs.com";
     const REPLYTO = "suilabs@suilabs.com";
 }

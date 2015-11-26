@@ -13,7 +13,7 @@ class DBHelper {
     /** @var PDO self::$db*/
     protected static $db;
     protected static $inifile='mysql.ini';
-    protected static $env='dev';
+    protected static $env='prod';
 
     /** @var  array $result */
     protected static $result;
