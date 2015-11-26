@@ -16,11 +16,12 @@
 	}
 ?>
 
-<?php require 'includes/meta.php'; ?>
 <?php 
 	if( $init->check_session() ){
+		require 'includes/meta.php';
 		include("includes/contest-form.php");
 	}else{
+		require 'includes/meta.php';
 		include("includes/login-form.php");
 	}
 ?>

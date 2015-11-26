@@ -1,25 +1,23 @@
 html,
 body{
+	/*font-family:'Montserrat', sans-serif;*/
+	font-family: 'Alice', serif;
 	height:100%;
 	margin:0px;
 	padding:0px;
 }
 
 body{
-	/*background-image: url(../img/bgplus3.jpg);*/
-	/*background-repeat: no-repeat;*/
-	/*background-position: center;*/
-	/*background-size: cover;*/
-	/*background-color: #e3f2fd;*/
+	display: flex;
 }
 
 form{
 	position: relative;
-	margin:0px auto;
-	width:500px;
-	top:50%;
-	margin-top:-340px;
-	/*border:1px solid blue;*/
+	margin: 0px auto;
+	width: 33%;
+	height: 100%;
+	top: 50%;
+	margin-top: -355px;
 }
 
 h2{
@@ -44,10 +42,11 @@ input:focus{
 }
 
 .form-field{
+	font-family: 'Alice', serif;
 	width:100%;
 	height:50px;
 	display: block;
-	margin:0px 0px 20px 0px;
+	margin:0px 0px 25px 0px;
 	padding:0px;
 	font-size: 18px;
 	text-align: center;
@@ -70,12 +69,15 @@ input:focus{
 .form-logo{
 	display: block;
 	width:100%;
+	margin-bottom:35px;
 }
 
 .form-submit{
+	margin-top:30px;
 	border-bottom:4px solid #b71c1c;
 	background-color: red;
 	color:white;
+	margin-bottom:0px;
 }
 
 .form-submit:active,
@@ -108,34 +110,47 @@ input:focus{
 	display:none;
 }
 
+.img-wrapper{
+	width:33%;
+	height:100%;
+	overflow: hidden;
+}
+
 .back-img{
-	width: 300px;
-    position: absolute;
+    position: relative;
+	width: 100%;
     display: block;
     top: 0px;
 }
 
-.back-img-d{
-	right:0px;
-}
-
+.back-img-d,
 .back-img-g{
-	left:0px;
+    position: relative;
+    display: block;
+    top: 50%;
+    margin-top: -300px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .end-session-button{
-	display: block;
-	z-index: 99;
-	position: absolute;
+	position: fixed;
 	bottom: 0px;
-	margin: 20px;
-	color:red;
+	color: red;
+	left: 0px;
+	padding: 20px;
 }
 
 .result{
 	font-size: 48px;
 	color:red;
 	text-align: center;
+}
+
+.result-second{
+	font-size:24px;
+	color:red;
+	text-align:center;
 }
 
 .not-margin-bottom{
@@ -155,6 +170,11 @@ input:focus{
 	text-decoration: none;
 	display: block;
 	text-align: center;
+	width: 300px;
+	margin: 0px auto;
+	font-size: 21px;
+	position: relative;
+	top: 20px;
 }
 
 

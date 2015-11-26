@@ -25,11 +25,15 @@ class BhvDB extends DBHelper
      * SQL query to fetch Awards that must be activated but not yet delivered
      * @ignore
      */
-    private static $remaining_awards_sql =     "SELECT * FROM Awards WHERE not delivered and activation_date <= :_1;";
+    private static $remaining_awards_sql = "SELECT * FROM Awards WHERE not delivered and activation_date <= :_1;";
     /**
      * @var string SQL query to fetch an unused code by the key
      */
-    private static $search_code_sql =          "SELECT * FROM Code c LEFT JOIN Inscription i ON i.Code_idCode = c.idCode WHERE idInscription is NULL and code = :_1;";
+    private static $search_code_inscription_sql =  "SELECT COUNT(*) FROM Inscription WHERE Code_idCode = :_1;";
+    /**
+     * @var string $search_code_sql SQL query to fetch a code in the database
+     */
+    private static $search_code_sql = "SELECT * FROM Code c WHERE code = :_1;";
     /**
      * @var string SQL to search person by the email
      */
@@ -179,7 +183,11 @@ class BhvDB extends DBHelper
         $n = count(self::$result);
         if ($n == 1)
         {
-            return self::$result[0][self::Code_id];
+            $idCode = self::$result[0][self::Code_id];
+            self::executeStatement(self::$search_code_inscription_sql, $idCode);
+            if (self::$result[0][0] == 1)
+                throw new Exception(StringDispenser::get_code_used_string());
+            return $idCode;
         }
         throw new Exception(StringDispenser::get_code_invalid_string());
     }
@@ -215,7 +223,7 @@ class BhvDB extends DBHelper
         $idAwards = self::check_awards($date);
         self::register($name, $lastname, $email, $idCode, $idAwards, $date);
         $m = new Mailer(new MailParticipation());
-        $m->sendMail();
+//        $m->sendMail();
 //        $id = self::$db->lastInsertId();
         if (!is_null($idAwards)) {
             self::deliver_award($idAwards);
@@ -227,7 +235,7 @@ class BhvDB extends DBHelper
                 "date"=>$date,
                 "code"=>$code
             ]);
-            $wm->sendMail();
+//            $wm->sendMail();
         }
         self::close();
         return !is_null($idAwards);

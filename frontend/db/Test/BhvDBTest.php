@@ -46,6 +46,36 @@ class BhvDBTest extends PHPUnit_Framework_TestCase
 
     }
 
+    public function testCodes() {
+        $ins1 = new Inscription("name1", "lastname1", "email1", "A000001");
+        $ins2 = new Inscription("name1", "lastname1", "email2", "oignoer");
+        $ins3 = new Inscription("name1", "lastname1", "email3", "A000001");
+        try {
+            $ret = BhvDB::new_inscription($ins1->name, $ins1->lastname, $ins1->email, DBHelper::today(), $ins1->code);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            $this->fail();
+        }
+        try {
+            $ret = BhvDB::new_inscription($ins2->name, $ins2->lastname, $ins2->email, DBHelper::today(), $ins2->code);
+            $this->fail();
+        } catch (Exception $e) {
+            if ($e->getMessage() != "Le code introduit est pas valable") {
+                echo "codigo valido\n";
+                $this->fail();
+            }
+        }
+        try {
+            $ret = BhvDB::new_inscription($ins3->name, $ins3->lastname, $ins3->email, DBHelper::today(), $ins3->code);
+            $this->fail();
+        } catch (Exception $e) {
+            if ($e->getMessage() != "Le code introduit est déjà utilisée") {
+                echo "codigo sin usar\n";
+                $this->fail();
+            }
+        }
+    }
+
     public function testNewInscriptionNotAwarded()
     {
 //        BhvDB::clear_inscription();

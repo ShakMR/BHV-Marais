@@ -5,6 +5,11 @@ function checkMail(mail) {
     return re.test(mail);
 }
 
+function checkCode(code){
+	var re = /([^A-O]){1}([0-9]){6}/;
+	return re.test(code);
+}
+
 
 // FUNCTION TO SEND POST
 
@@ -25,6 +30,29 @@ function sendData(code, name, lastname, mail, info){
 	});	
 }
 
+// FUNCTION TO CHANGE DE LANGUAGE
+
+function changeLang(toChange){
+	switch(toChange){
+ 		case "code":
+ 		var result = "CODE"
+ 		break;
+
+ 		case "lastname":
+ 		var result = "NOM"
+ 		break;
+
+ 		case "name":
+ 		var result = "PRENOM"
+ 		break;
+
+ 		case "email":
+ 		var result = "E-MAIL";
+ 		break;
+ 	}
+ 	return result;
+}
+
 
 // WHEN DOCUMENT LOADS
 
@@ -33,6 +61,7 @@ jQuery(document).ready(function($) {
 	$(document).on('click', '.form-submit', function(event) {
 		event.preventDefault();			
 
+		var array		= [];
 		var $code 		= $( ".form-field[name='code']" );
 		var $name 		= $( ".form-field[name='name']" );
 		var $lastname 	= $( ".form-field[name='lastname']" );
@@ -50,12 +79,12 @@ jQuery(document).ready(function($) {
 			var inputs = $(document).find('input:not(.form-submit)');
 			$.each(inputs, function(i, value) {
 				 if($(inputs[i]).val() == ""){
-				 	$(this).addClass('error-field');
-				 	$('.form-alert-general').show();
+				 	array.push(changeLang($(inputs[i]).attr('name')));
 				 }
 			});
+			alert("Les champs suivants sont vides:\n"+array.join(' – '));
 		}else{
-			if($code.val().length <= 6){
+			if( checkCode($code.val()) ){
 				alert("The code is not valid");
 			}else{
 				if(checkMail($mail.val())){
