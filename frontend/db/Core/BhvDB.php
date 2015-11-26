@@ -42,7 +42,7 @@ class BhvDB extends DBHelper
     /**
      * @var string SQL query to inster a new person in the database
      */
-    private static $insert_new_person_sql =    "INSERT INTO People (name, lastname, email) VALUES (?, ?, ?);";
+    private static $insert_new_person_sql =    "INSERT INTO People (name, lastname, email, acceptedConditions) VALUES (?, ?, ?, ?);";
     /**
      * @var string SQL query to insert a new inscription in the database
      */
@@ -113,9 +113,10 @@ class BhvDB extends DBHelper
      * @param $idCode int Code id
      * @param $idAward int Award id
      * @param $date DateTime inscription date
+     * @param $accept Boolean
      * @throws Exception Throws and exception if the user is already in the database
      */
-    private static function register ($name, $lastname, $email, $idCode, $idAward, $date)
+    private static function register ($name, $lastname, $email, $idCode, $idAward, $date, $accept)
     {
         self::executeStatement(self::$search_person_sql, $email);
         if (count(self::$result) >= 1)
@@ -129,6 +130,7 @@ class BhvDB extends DBHelper
             $stmt1->add_parameter($name);
             $stmt1->add_parameter($lastname);
             $stmt1->add_parameter($email);
+            $stmt1->add_parameter($accept);
             self::$db->beginTransaction();
 
             self::executeTransactionStatement($stmt1);
@@ -216,12 +218,12 @@ class BhvDB extends DBHelper
      * @throws Exception Invalid Code Exception, User Already Registered Exception
      * @see get_valid_code()
      */
-    public static function new_inscription($name, $lastname, $email, $date, $code)
+    public static function new_inscription($name, $lastname, $email, $date, $code, $accept)
     {
         self::connect();
         $idCode = self::get_valid_code($code);
         $idAwards = self::check_awards($date);
-        self::register($name, $lastname, $email, $idCode, $idAwards, $date);
+        self::register($name, $lastname, $email, $idCode, $idAwards, $date, $accept);
         $m = new Mailer(new MailParticipation());
         $m->sendMail();
         $id = self::$db->lastInsertId();

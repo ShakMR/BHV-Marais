@@ -6,7 +6,7 @@
     $error = false;
 
     try {
-        $ret = $init->new_inscription($_POST['NAME'], $_POST['LAST'], $_POST['MAIL'], $init->today(), $_POST['CODE']);
+        $ret = $init->new_inscription($_POST['NAME'], $_POST['LAST'], $_POST['MAIL'], $init->today(), $_POST['CODE'], $_POST['INFO']);
     } catch (Exception $e) {
         print "<p class='result'>".$e->getMessage()."</p>";
         print "<p class='result-second'> N'hesitez pas à retenter votre chance jusqu'au 24 décembre.</p>";
